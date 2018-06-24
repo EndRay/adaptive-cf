@@ -1,0 +1,35 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.centred{
+  text-align: center;
+  align: center;
+}
+
+.problem-container{
+  width: 50%;
+  float: left;
+}
+
+.problem{
+  font-size: 20px;
+  text-align: center;
+  margin: 5px;
+  padding: 5px;
+  border: solid 2px #666;
+  background-color: #EEE;
+}
+
+.problem.solved{
+  background-color: #8F8;
+}
+
+.problem.tried{
+  background-color: #ECC;
+}
+
+a {
+  color: #00B7FF;
+}
