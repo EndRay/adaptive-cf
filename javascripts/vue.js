@@ -24,13 +24,13 @@ var app = new Vue({
             }.bind(this));
         },
         get_rating: function (callback) {
-            $.getJSON('http://codeforces.com/api/user.info?handles=' + this.handle, function(task){
+            $.getJSON('https://codeforces.com/api/user.info?handles=' + this.handle, function(task){
                 this.rating = task['result'][0]['rating'] || 1500;
                 callback();
             }.bind(this));
         },
         get_solved: function () {
-            $.getJSON('http://codeforces.com/api/user.status?handle='+ this.handle + '&from=1&count=10000', function(task){
+            $.getJSON('https://codeforces.com/api/user.status?handle='+ this.handle + '&from=1&count=10000', function(task){
                 var solved = {};
                 task['result'].forEach(function (el, i, arr) {
                     var problem = el['problem'];
