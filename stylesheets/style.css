@@ -3,6 +3,11 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+a {
+  color: #00B7FF;
+}
+
+
 .centred{
   text-align: center;
   align: center;
@@ -30,6 +35,33 @@ body {
   background-color: #ECC;
 }
 
-a {
-  color: #00B7FF;
+.left-container{
+  float: left;
+  width: 67%;
+}
+
+.right-container{
+  float: right;
+  width: 33%;
+}
+
+.tag{
+  width: 50%;
+  float: left;
+  margin: 0;
+  font-size: 20px;
+}
+
+.tag.chosen{
+  color: #282;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }

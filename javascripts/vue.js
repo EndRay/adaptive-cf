@@ -5,12 +5,22 @@ var app = new Vue({
         harder: [],
         easier: [],
         solved: [],
+        tags: [],
+        chosen_tags: [],
+        selected_tag: "",
         handle: "tourist",
         rating: 0
     },
     methods:{
         get_problems: function () {
             $.getJSON('data-ru.json', function(task){
+                task.forEach(function (el) {
+                    el.tags.forEach(function (tag) {
+                        if(this.tags.includes(tag))
+                            return;
+                        this.tags.push(tag);
+                    }.bind(this));
+                }.bind(this));
                 this.harder = task.filter(function (problem) {
                     return problem.average >= this.rating;
                 }.bind(this)).sort(function (a, b) {
@@ -45,6 +55,17 @@ var app = new Vue({
         load_info: function () {
             app.get_solved();
             app.get_rating(app.get_problems);
+        },
+        tags_compare: function (tags) {
+            return this.chosen_tags.reduce(function (acc, x) {
+                return acc && tags.includes(x);
+            }, true);
+        },
+        change_tag_state: function (tag) {
+            if(this.chosen_tags.includes(tag))
+                this.chosen_tags.splice(this.chosen_tags.indexOf(tag), 1);
+            else
+                this.chosen_tags.push(tag);
         }
     },
 });
