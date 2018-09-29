@@ -5,7 +5,7 @@ var app = new Vue({
         harder: [],
         easier: [],
         solved: [],
-		easier_d: [],
+		solved_tasks: [],
         tags: [],
         chosen_tags: [],
         selected_tag: "",
@@ -27,21 +27,14 @@ var app = new Vue({
                 }.bind(this)).sort(function (a, b) {
                     return a.average - b.average;
                 });
-				this.harder_d = task.filter(function (problem) {
-                    return problem.average >= this.rating;
-                }.bind(this)).sort(function (a, b) {
-                    return b.average - a.average;
-                });
                 this.easier = task.filter(function (problem) {
-                    return problem.average < this.rating;
+					app.get_solved();
+                    return problem.average < this.rating && this.solved[problem['contestId']][problem['index']] === "solved";
                 }.bind(this)).sort(function (a, b) {
                     return b.average - a.average;
                 });
             }.bind(this));
         },
-		go: function(contest, index) {
-			window.open('http://codeforces.com/problemset/problem/' + contest + '/' + index, '_blank');
-		},
         get_rating: function (callback) {
             $.getJSON('https://codeforces.com/api/user.info?handles=' + this.handle, function(task){
                 this.rating = task['result'][0]['rating'] || 1500;
