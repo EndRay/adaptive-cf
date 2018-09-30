@@ -8,35 +8,54 @@
     <div id="app">
       <h1 class="centred">Adaptive CF</h1>
       <div class="centred">
-        <input v-model="handle">
-        <button @click="load_info()">refresh</button>
+		<input v-model="handle" style="border-radius:5px;padding: 10px;border-color:#eae5bf;font-size:20px;background-color:#efe5bf">
+        <br/>
+	    <button @click="load_info()" style="margin-top: 20px">refresh</button>
         <h1>{{ rating }}</h1>
       </div>
       <hr>
+	  <div class="info">
+		<p>Country: {{ country }}</p>
+		<p>City: {{ city }}</p>
+		<p>Rank: {{ rank }}</p>
+		<p>Max rank: {{ max_rank }}</p>
+		<p>Registration time: {{ register_time }}</p>
+	  </div>
+	  <div class="right-container">
+        <h1 class="centred"> Tags </h1>
+        <h1 v-for="tag in tags" :class="{ noselect: true, centred: true, tag: true, chosen: chosen_tags.includes(tag) }" @click="change_tag_state(tag)"> {{ tag }} </h1>
+      </div>
       <div class="left-container">
        <div class="problem-container">
           <h1 class="centred">Harder</h1>
-          <div class="problem" v-for="el in harder" v-if="tags_compare(el.tags)" :class="{ solved: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'solved', tried: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'tried' }">
+          <div class="problem" v-on:click="go(el.contest, el.index)" v-for="el in harder" v-if="tags_compare(el.tags)" :class="{ solved_hidden: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'solved', tried: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'tried' }">
             <a :href="'http://codeforces.com/problemset/problem/' + el.contest + '/' + el.index" target="_blank">{{ el.contest }}{{ el.index }}: {{ el.name }}</a>
             <span> ({{ el.average }})</span>
           </div>
         </div>
         <div class="problem-container">
           <h1 class="centred">Easier</h1>
-          <div class="problem" v-for="el in easier" v-if="tags_compare(el.tags)" :class="{ solved: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'solved', tried: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'tried' }">
+          <div class="problem" v-on:click="go(el.contest, el.index)" v-for="el in easier" v-if="tags_compare(el.tags)" :class="{ solved_hidden: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'solved', tried: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'tried' }">
+            <a :href="'http://codeforces.com/problemset/problem/' + el.contest + '/' + el.index" target="_blank">{{ el.contest }}{{ el.index }}: {{ el.name }}</a>
+            <span> ({{ el.average }})</span>
+          </div>
+        </div>
+		<div class="problem-container">
+          <h1 class="centred">Solved</h1>
+          <div class="problem problem_d" v-on:click="go(el.contest, el.index)" v-for="el in harder_d" v-if="tags_compare(el.tags)" :class="{ solved: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'solved', tried_d: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'tried' }">
+            <a :href="'http://codeforces.com/problemset/problem/' + el.contest + '/' + el.index" target="_blank">{{ el.contest }}{{ el.index }}: {{ el.name }}</a>
+            <span> ({{ el.average }})</span>
+          </div>
+		  <div class="problem problem_d" v-on:click="go(el.contest, el.index)" v-for="el in easier" v-if="tags_compare(el.tags)" :class="{ solved: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'solved', tried_d: solved[el.contest] !== undefined &amp;&amp; solved[el.contest][el.index] === 'tried' }">
             <a :href="'http://codeforces.com/problemset/problem/' + el.contest + '/' + el.index" target="_blank">{{ el.contest }}{{ el.index }}: {{ el.name }}</a>
             <span> ({{ el.average }})</span>
           </div>
         </div>
       </div>
-
-      <div class="right-container">
-        <h1 class="centred"> Tags </h1>
-        <h1 v-for="tag in tags" :class="{ noselect: true, centred: true, tag: true, chosen: chosen_tags.includes(tag) }" @click="change_tag_state(tag)"> {{ tag }} </h1>
-      </div>
     </div>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="javascripts/vue.js"></script>
+	<script src="javascripts/moment.js"></script>
   </body>
 </html>

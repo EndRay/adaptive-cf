@@ -14,39 +14,71 @@ a {
 }
 
 .problem-container{
-  width: 50%;
+  width: 33%;
   float: left;
+  display: inline-block;
 }
 
 .problem{
   font-size: 20px;
   text-align: center;
   margin: 5px;
-  padding: 5px;
+  padding: 20px;
   border: solid 2px #666;
   background-color: #EEE;
+  border-radius: 15px;
+  cursor: pointer;
 }
+
+.problem:hover {
+  transition: 0.5s;
+  background-color: #efe5bf;
+}
+
+.problem_d{
+	display: none;
+}
+
+.solved_hidden {
+	display: none;
+}
+
 
 .problem.solved{
   background-color: #8F8;
+  display: block;
+}
+
+.problem.solved:hover {
+	transition: 0.5s;
+	background-color: #bF8;
+}
+
+.problem.tried_d{
+  background-color: #f7c362;
+  display: none;
 }
 
 .problem.tried{
-  background-color: #ECC;
+  background-color: #f7c362;
+}
+
+.problem.tried:hover {
+  transition: 0.5s;
+  background-color: #dc6;
 }
 
 .left-container{
-  float: left;
-  width: 67%;
+  width: 100%;
+  float: top;
 }
 
 .right-container{
-  float: right;
-  width: 33%;
+  float: top;
 }
 
 .tag{
-  width: 50%;
+  width: 25%;
   float: left;
   margin: 0;
   font-size: 20px;
@@ -65,3 +97,65 @@ a {
   -o-user-select: none;
   user-select: none;
 }
+
+.inp {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 280px;
+}
+.inp .label {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  font-size: 16px;
+  color: #9098a9;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+}
+.inp .border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: #07f;
+  transform: scaleX(0);
+  transform-origin: 0 0;
+  transition: all 0.15s ease;
+}
+.inp input {
+  -webkit-appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 12px 0;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 2px solid #c8ccd4;
+  background: none;
+  border-radius: 0;
+  color: #223254;
+  transition: all 0.15s ease;
+}
+.inp input:hover {
+  background: rgba(34,50,84,0.03);
+}
+.inp input:not(:placeholder-shown) + span {
+  color: #5a667f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp input:focus {
+  background: none;
+  outline: none;
+}
+.inp input:focus + span {
+  color: #07f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp input:focus + span + .border {
+  transform: scaleX(1);
+}
+

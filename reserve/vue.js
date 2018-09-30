@@ -5,16 +5,11 @@ var app = new Vue({
         harder: [],
         easier: [],
         solved: [],
-		harder_d: [],
+		solved_tasks: [],
         tags: [],
         chosen_tags: [],
         selected_tag: "",
-        handle: localStorage.getItem("handle"),
-		country: "a",
-		city: "a",
-		rank: "a",
-		max_rank: "a",
-		register_time: "2018",
+        handle: "tourist",
         rating: 0
     },
     methods:{
@@ -32,29 +27,17 @@ var app = new Vue({
                 }.bind(this)).sort(function (a, b) {
                     return a.average - b.average;
                 });
-				this.harder_d = task.filter(function (problem) {
-                    return problem.average >= this.rating;
-                }.bind(this)).sort(function (a, b) {
-                    return b.average - a.average;
-                });
                 this.easier = task.filter(function (problem) {
-                    return problem.average < this.rating;
+					app.get_solved();
+                    return problem.average < this.rating && this.solved[problem['contestId']][problem['index']] === "solved";
                 }.bind(this)).sort(function (a, b) {
                     return b.average - a.average;
                 });
             }.bind(this));
         },
-		go: function(contest, index) {
-			window.open('http://codeforces.com/problemset/problem/' + contest + '/' + index, '_blank');
-		},
         get_rating: function (callback) {
             $.getJSON('https://codeforces.com/api/user.info?handles=' + this.handle, function(task){
                 this.rating = task['result'][0]['rating'] || 1500;
-				this.max_rank = task['result'][0]['maxRank'] || "none";
-				this.country = task['result'][0]['country'] || "none";
-				this.city = task['result'][0]['city'] || "none";
-				this.rank = task['result'][0]['rank'] || "none";
-				this.register_time = new Date(task['result'][0]['registrationTimeSeconds'] * 1000).toLocaleDateString() || "none";
                 callback();
             }.bind(this));
         },
@@ -72,8 +55,7 @@ var app = new Vue({
             }.bind(this));
         },
         load_info: function () {
-			localStorage.setItem("handle", this.handle);
-			app.get_solved();
+            app.get_solved();
             app.get_rating(app.get_problems);
         },
         tags_compare: function (tags) {
